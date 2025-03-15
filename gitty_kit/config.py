@@ -12,4 +12,17 @@ config_path = os.path.join(BASE_DIR, "config.ini")
 config = configparser.ConfigParser()
 config.read(config_path)
 
-OPENAI_API_KEY = config.get("API", "OPENAI_API_KEY")
+# 기본 설정
+DEFAULT_CONFIG = {
+    "api": {"model": "gpt-4o-mini", "key": config.get("API", "OPENAI_API_KEY")},
+    "format": {
+        "style": "conventional",
+    },
+    "language": "ko",
+}
+
+# 언어 설정
+SUPPORT_LANGUAGES = ["ko", "en"]
+
+# 커밋 메시지 스타일 설정
+COMMIT_STYLES = ["conventional", "simple"]
