@@ -95,9 +95,13 @@ def setup_config():
     lang_options = ", ".join(SUPPORT_LANGUAGES)
     language = input(f"\n기본 언어 ({lang_options}) [ko]: ") or "ko"
 
+    # 4. 커밋 제목 최대 길이
+    max_length = input(f"\n커밋 제목 최대 길이: ") or 75
+
     config["api"]["key"] = api_key
     config["api"]["model"] = model
     config["format"]["style"] = style
+    config["format"]["max_length"] = max_length
     config["language"] = language
 
     if config_save(config):
@@ -122,6 +126,7 @@ def main():
     print(f"현재 언어: {config['language']}")
     print(f"선택된 모델: {config['api']['model']}")
     print(f"커밋 스타일: {config['format']['style']}")
+    print(f"커밋 제목 최대 길이: {config['format']['max_length']}")
 
 
 if __name__ == "__main__":

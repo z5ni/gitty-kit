@@ -20,12 +20,13 @@ DEFAULT_CONFIG = {
     "api": {"model": "gpt-4o-mini", "key": config.get("API", "OPENAI_API_KEY")},
     "format": {
         "style": "conventional",
+        "max_length": "75",
     },
     "language": "ko",
 }
 
 
-OPENAI_MODEL = {"model": ["gpt-4o", "gpt-4o-mini", "o3-mini"]}
+OPENAI_MODEL = {"model": ["gpt-4o-mini", "gpt-4o", "o3-mini"]}
 
 # 언어 설정
 SUPPORT_LANGUAGES = ["ko", "en"]
