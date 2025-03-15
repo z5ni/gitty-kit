@@ -10,12 +10,11 @@ def ai_client_init(config):
     return client
 
 
-def generate_commit_message():
+def generate_commit_message(config):
     """
     openai API를 이용해 Git 변경사항에 대한 커밋 메시지 생성
     """
 
-    config = config_load()
     diff_text = git_diff()
 
     if not diff_text:
