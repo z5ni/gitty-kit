@@ -23,6 +23,11 @@ def main():
     # 4. 커밋 처리
     ui.print_cat("Gitty-Kit이 시작되었습니다.")
     commit_message = generate_commit_message(config)
+
+    if commit_message is None:
+        ui.print_cat("변경사항이 없습니다.")
+        return
+
     ui.print_commit_message(commit_message)
 
     choice = ui.get_user_choices()

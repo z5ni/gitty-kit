@@ -18,7 +18,7 @@ def generate_commit_message(config):
     diff_text = git_diff()
 
     if not diff_text:
-        return "변경사항이 없습니다."
+        return None
 
     client = ai_client_init(config)
 
