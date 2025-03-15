@@ -80,7 +80,7 @@ def setup_config(ui):
     ui.print_cat("🔑 API 설정")
     ui.print_separator()
 
-    api_key = input(f"API 키: ")
+    api_key = input(f"API 키: ") or DEFAULT_CONFIG["api"]["key"]
 
     models = OPENAI_MODEL["model"]
     model_options = ", ".join(models)
