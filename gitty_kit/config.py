@@ -12,6 +12,9 @@ config_path = os.path.join(BASE_DIR, "config.ini")
 config = configparser.ConfigParser()
 config.read(config_path)
 
+CONFIG_DIR = os.path.expanduser("~/.gitty-kit")
+CONFIG_FILE = os.path.join(CONFIG_DIR, "config.json")
+
 # 기본 설정
 DEFAULT_CONFIG = {
     "api": {"model": "gpt-4o-mini", "key": config.get("API", "OPENAI_API_KEY")},
@@ -20,6 +23,9 @@ DEFAULT_CONFIG = {
     },
     "language": "ko",
 }
+
+
+OPENAI_MODEL = {"model": ["gpt-4o", "gpt-4o-mini", "o3-mini"]}
 
 # 언어 설정
 SUPPORT_LANGUAGES = ["ko", "en"]

@@ -16,6 +16,7 @@ response = client.responses.create(
     instructions=prepare_prompt(
         style="simple",
         lang="en",
+        max_length=50,
     ),
     input=git_diff(),
 )
