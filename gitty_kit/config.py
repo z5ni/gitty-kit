@@ -23,6 +23,9 @@ DEFAULT_CONFIG = {
         "max_length": "75",
     },
     "language": "ko",
+    "ui": {
+        "cat_mode": True,
+    },
 }
 
 
@@ -33,3 +36,6 @@ SUPPORT_LANGUAGES = ["ko", "en"]
 
 # 커밋 메시지 스타일 설정
 COMMIT_STYLES = ["conventional", "simple"]
+
+# 고양이 이모티콘
+CAT_EMOJIS = ["😺", "😸", "😻", "😽", "🐱", "🐈", "😹"]
