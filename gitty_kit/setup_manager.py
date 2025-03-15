@@ -98,11 +98,16 @@ def setup_config(ui):
     # 4. 커밋 제목 최대 길이
     max_length = input(f"\n커밋 제목 최대 길이: ") or 75
 
+    # 5. cat_mode 설정
+    cat_mode_input = input(f"고양이 이모지 UI 사용 (y/n) [y]: ") or "y"
+    cat_mode = cat_mode_input.lower() == "y"
+
     config["api"]["key"] = api_key
     config["api"]["model"] = model
     config["format"]["style"] = style
     config["format"]["max_length"] = max_length
     config["language"] = language
+    config["ui"]["cat_mode"] = cat_mode
 
     if config_save(config, ui):
         ui.print_cat("\n설정이 저장되었습니다")

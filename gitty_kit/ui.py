@@ -63,7 +63,7 @@ class UIManager:
         self.print_separator()
 
     def get_user_choices(
-        self, prompt="커밋 메시지를 바로 적용할까요? (y: yes, n: no, e: edit) "
+        self, prompt="커밋 메시지를 바로 적용할까요? (y: yes, n: no) "
     ):
         """
         사용자 선택 입력
