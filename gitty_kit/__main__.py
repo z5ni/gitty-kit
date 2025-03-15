@@ -1,17 +1,20 @@
 from ai_client import generate_commit_message
 from utils.git import git_commit
 from setup_manager import ensure_user_config_exists, setup_config, config_load
+from ui import UIManager
 
 
 def main():
-    config_exists = ensure_user_config_exists()
+    ui = UIManager(cat_mode=True)
+    config_exists = ensure_user_config_exists(ui)
 
     if not config_exists:
-        print("초기 설정을 시작합니다.")
-        setup_config()
+        ui.print_cat("초기 설정을 시작합니다.")
+        setup_config(ui)
 
-    config = config_load()
+    config = config_load(ui)
     commit_message = generate_commit_message(config)
+    ui.print_commit_message(commit_message)
     git_commit(commit_message)
 
 

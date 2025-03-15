@@ -53,7 +53,6 @@ def git_commit(message, directory="."):
             capture_output=True,
             text=True,
         )
-        print(result.stdout)
         return True
     except subprocess.CalledProcessError as e:
         if "nothing to commit" in e.stderr:
