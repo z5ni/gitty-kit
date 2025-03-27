@@ -66,8 +66,20 @@ def main():
         modified_message = ui.edit_commit_message(commit_message)
 
         if modified_message.strip():
-            git_commit(modified_message)
-            ui.print_success("수정된 메시지로 커밋 완료!")
+            # 수정된 메시지 보여주기
+            ui.print_cat("수정된 커밋 메시지:", "📝")
+            ui.print_separator()
+            print(modified_message)
+            ui.print_separator()
+
+            # 최종 확인
+            confirm = ui.get_user_choices("이 메시지로 커밋할까요? (y: 예, n: 아니오) ")
+            if confirm == "y":
+                git_commit(modified_message)
+                ui.print_success("수정된 메시지로 커밋 완료!")
+            else:
+                ui.print_cat("커밋이 취소되었습니다.")
+
         else:
             ui.print_cat("커밋이 취소되었습니다.")
     else:
