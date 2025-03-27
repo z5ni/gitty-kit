@@ -35,6 +35,7 @@ def git_add(paths=".", directory="."):
         result = subprocess.run(
             cmd, cwd=directory, check=True, capture_output=True, text=True
         )
+        print(result.stdout)
         return True
     except subprocess.CalledProcessError as e:
         print(f"error: {e.stderr}")
@@ -53,6 +54,7 @@ def git_commit(message, directory="."):
             capture_output=True,
             text=True,
         )
+        print(result.stdout)
         return True
     except subprocess.CalledProcessError as e:
         if "nothing to commit" in e.stderr:
@@ -80,6 +82,7 @@ def git_diff(path=None, staged=True, directory="."):
         result = subprocess.run(
             cmd, cwd=directory, check=True, capture_output=True, text=True
         )
+        print(result.stdout)
         return result.stdout
     except subprocess.CalledProcessError as e:
         print(f"오류: {e.stderr}")
