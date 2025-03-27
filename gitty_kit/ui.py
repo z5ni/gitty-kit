@@ -85,7 +85,8 @@ class UIManager:
                             stderr=subprocess.PIPE == 0,
                         ):
                             editor = possible_editor
-                    except:
+                    except Exception as e:
+                        print(str(e))
                         continue
 
             # 아무 에디터도 찾지 못한 경우
