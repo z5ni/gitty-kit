@@ -1,10 +1,7 @@
-from config import (
-    DEFAULT_CONFIG,
-    CONFIG_DIR,
-    CONFIG_FILE,
-)
-import os
 import json
+import os
+
+from config import CONFIG_DIR, CONFIG_FILE, DEFAULT_CONFIG
 
 
 def ensure_user_config_exists(ui):
@@ -70,7 +67,7 @@ def setup_config(ui):
     """
     설정 CLI
     """
-    from config import OPENAI_MODEL, COMMIT_STYLES, SUPPORT_LANGUAGES
+    from config import COMMIT_STYLES, OPENAI_MODEL, SUPPORT_LANGUAGES
 
     config = config_load(ui)
 
@@ -80,7 +77,7 @@ def setup_config(ui):
     ui.print_cat("🔑 API 설정")
     ui.print_separator()
 
-    api_key = input(f"API 키: ") or DEFAULT_CONFIG["api"]["key"]
+    api_key = input("API 키: ") or DEFAULT_CONFIG["api"]["key"]
 
     models = OPENAI_MODEL["model"]
     model_options = ", ".join(models)
@@ -96,10 +93,10 @@ def setup_config(ui):
     language = input(f"\n기본 언어 ({lang_options}) [ko]: ") or "ko"
 
     # 4. 커밋 제목 최대 길이
-    max_length = input(f"\n커밋 제목 최대 길이: ") or 75
+    max_length = input("\n커밋 제목 최대 길이: ") or 75
 
     # 5. cat_mode 설정
-    cat_mode_input = input(f"고양이 이모지 UI 사용 (y/n) [y]: ") or "y"
+    cat_mode_input = input("고양이 이모지 UI 사용 (y/n) [y]: ") or "y"
     cat_mode = cat_mode_input.lower() == "y"
 
     config["api"]["key"] = api_key

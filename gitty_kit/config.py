@@ -1,7 +1,6 @@
-import os
 import configparser
+import os
 from pathlib import Path
-
 
 # 현재 스크립트 기준으로 상위 디렉토리의 config.ini 경로 찾기
 BASE_DIR = Path(__file__).resolve().parent.parent

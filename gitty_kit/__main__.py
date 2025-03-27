@@ -1,7 +1,7 @@
 from ai_client import generate_commit_message
-from utils.git import git_commit
-from setup_manager import ensure_user_config_exists, setup_config, config_load
+from setup_manager import config_load, ensure_user_config_exists, setup_config
 from ui import UIManager
+from utils.git import git_commit
 
 
 def main():

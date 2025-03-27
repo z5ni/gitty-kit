@@ -1,7 +1,6 @@
-import os
-from openai import OpenAI
-from setup_manager import config_load
+
 from message_generator import prepare_prompt
+from openai import OpenAI
 from utils.git import git_diff
 
 
