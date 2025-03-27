@@ -62,6 +62,14 @@ def main():
     if choice == "y":
         git_commit(commit_message)
         ui.print_success("커밋 완료!")
+    elif choice == "e":
+        modified_message = ui.edit_commit_message(commit_message)
+
+        if modified_message.strip():
+            git_commit(modified_message)
+            ui.print_success("수정된 메시지로 커밋 완료!")
+        else:
+            ui.print_cat("커밋이 취소되었습니다.")
     else:
         ui.print_cat("커밋이 취소되었습니다.")
 
