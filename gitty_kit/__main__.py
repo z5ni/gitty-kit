@@ -27,15 +27,17 @@ def main():
     config_exists = ensure_user_config_exists(temp_ui)
 
     # 3-1. 설정 파일이 없거나 --config(-c) 옵션이 전달된 경우 설정 마법사 실행
-    if not config_exists or args.config:
-        if args.config:
-            temp_ui.print_cat("설정 마법사를 시작합니다.")
-        else:
-            temp_ui.print_cat("초기 설정을 시작합니다.")
+    if not config_exists:
+        setup_success = setup_config(temp_ui, is_initial_setup=True)
 
+        if setup_success:
+            temp_ui.print_cat("설정이 완료되었습니다. 다시 실행하여 커밋을 진행하세요.")
+            return
+
+    if args.config:
         setup_success = setup_config(temp_ui)
 
-        if args.config and setup_success:
+        if setup_success:
             temp_ui.print_cat("설정이 완료되었습니다. 다시 실행하여 커밋을 진행하세요.")
             return
 
