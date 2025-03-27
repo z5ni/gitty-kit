@@ -27,12 +27,20 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Sort imports with isort
       run: |
-        isort --check --diff .
+        isort .
 
     - name: Check formatting with black
       run: |
-        black --check --diff .
+        black .
 
     - name: Lint with ruff
       run: |
-        ruff check .
+        ruff check --fix
+
+    - name: Commit changes
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add .
+        git diff --staged --quiet || git commit -m "Auto-format imports and code"
+        git push || echo "No changes to commit"
