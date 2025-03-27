@@ -1,4 +1,3 @@
-
 from message_generator import prepare_prompt
 from openai import OpenAI
 from utils.git import git_diff
