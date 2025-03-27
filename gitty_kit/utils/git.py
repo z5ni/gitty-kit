@@ -82,7 +82,6 @@ def git_diff(path=None, staged=True, directory="."):
         result = subprocess.run(
             cmd, cwd=directory, check=True, capture_output=True, text=True
         )
-        print(result.stdout)
         return result.stdout
     except subprocess.CalledProcessError as e:
         print(f"오류: {e.stderr}")

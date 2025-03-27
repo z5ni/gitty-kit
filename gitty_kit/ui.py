@@ -1,4 +1,7 @@
+import os
 import random
+import subprocess
+import tempfile
 
 from config import CAT_EMOJIS
 
@@ -63,8 +66,72 @@ class UIManager:
         print(commit_message)
         self.print_separator()
 
+    def get_editor(self):
+        """
+        사용자 시스템의 기본 에디터 가져오기
+        """
+        editor = os.environ.get("VISUAL") or os.environ.get("EDITOR")
+
+        # 기본 에디터가 설정되어 있지 않은 경우
+        if not editor:
+            if os.name == "nt":  # windows
+                editor = "notepad"
+            else:  # linux/Unix/Mac
+                for possible_editor in ["vi", "vim", "nano"]:
+                    try:
+                        if subprocess.call(
+                            ["which", possible_editor],
+                            stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE == 0,
+                        ):
+                            editor = possible_editor
+                    except Exception as e:
+                        print(str(e))
+                        continue
+
+            # 아무 에디터도 찾지 못한 경우
+            if not editor:
+                editor = "vi"
+        return editor
+
+    def edit_commit_message(self, commit_message):
+        """
+        에디터를 통해 커밋 메시지 수정
+        """
+        editor = self.get_editor()
+
+        # 임시 파일 생성성
+        with tempfile.NamedTemporaryFile(
+            suffix=".tmp", mode="+w", delete=False
+        ) as temp:
+            temp_filename = temp.name
+            temp.write(commit_message)
+            temp.write("\n\n# 이 줄 위에 커밋 메시지를 작성하세요.")
+            temp.write("\n# '#'으로 시작하는 줄은 무시됩니다.")
+            temp.flush()
+
+        try:
+            subprocess.call([editor, temp_filename])
+
+            # 수정된 내용 읽기
+            with open(temp_filename, "r") as temp:
+                modified_message_lines = []
+
+                # 주석 처리된 라인 제외외
+                for line in temp:
+                    if not line.strip().startswith("#"):
+                        modified_message_lines.append(line)
+
+                modified_message = "".join(modified_message_lines).strip()
+                return modified_message
+
+        finally:
+            # 임시 파일 삭제
+            os.unlink(temp_filename)
+
     def get_user_choices(
-        self, prompt="커밋 메시지를 바로 적용할까요? (y: yes, n: no) "
+        self,
+        prompt="커밋 메시지를 바로 적용할까요? (y: 바로 적용, e: 수정 후 적용, n: 취소) ",
     ):
         """
         사용자 선택 입력

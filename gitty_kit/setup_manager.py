@@ -63,7 +63,7 @@ def config_save(config, ui):
         return False
 
 
-def setup_config(ui):
+def setup_config(ui, is_initial_setup=False):
     """
     설정 CLI
     """
@@ -71,32 +71,61 @@ def setup_config(ui):
 
     config = config_load(ui)
 
-    ui.print_cat("\n Gitty-Kit 설정 마법사")
+    if is_initial_setup:
+        config = DEFAULT_CONFIG.copy()
+        ui.print_cat("Gitty-Kit 초기 설정 마법사 \n")
+    else:
+        config = config_load(ui)
+        ui.print_cat("Gitty-Kit 설정 변경 마법사 \n")
 
     # 1. API 설정
-    ui.print_cat("🔑 API 설정")
+    print("🔑 API 설정")
     ui.print_separator()
 
-    api_key = input("API 키: ") or DEFAULT_CONFIG["api"]["key"]
+    api_key_display = (
+        config["api"]["key"][:4] + "****" if config["api"]["key"] else "none"
+    )
+    api_key = input(f"API 키 [{api_key_display}]: ") or config["api"]["key"]
 
+    # 1. 모델 선택
     models = OPENAI_MODEL["model"]
     model_options = ", ".join(models)
-    model = input(f"사용할 모델 ({model_options}) [{models[0]}]: ") or models[0]
+    model = (
+        input(f"사용할 모델 ({model_options}) [{config['api']['model']}]: ")
+        or config["api"]["model"]
+    )
 
+    print()
     # 2. 커밋 메시지 형식 설정
-    ui.print_cat("\n커밋 메시지 형식 설정")
+    ui.print_cat("커밋 메시지 형식 설정")
+    ui.print_separator()
     style_options = ", ".join(COMMIT_STYLES)
-    style = input(f"커밋 스타일 ({style_options}) [conventional]: ") or "conventional"
+    style = (
+        input(f"커밋 스타일 ({style_options}) [{config['format']['style']}]: ")
+        or config["format"]["style"]
+    )
 
     # 3. 언어 설정
     lang_options = ", ".join(SUPPORT_LANGUAGES)
-    language = input(f"\n기본 언어 ({lang_options}) [ko]: ") or "ko"
+    language = (
+        input(f"기본 언어 ({lang_options}) [{config['language']}]: ")
+        or config["language"]
+    )
 
     # 4. 커밋 제목 최대 길이
-    max_length = input("\n커밋 제목 최대 길이: ") or 75
+    max_length = (
+        input(f"커밋 제목 최대 길이 [{config['format']['max_length']}]: ")
+        or config["format"]["max_length"]
+    )
 
+    print()
+    ui.print_cat("mode 설정")
+    ui.print_separator()
     # 5. cat_mode 설정
-    cat_mode_input = input("고양이 이모지 UI 사용 (y/n) [y]: ") or "y"
+    cat_mode_str = "y" if config["ui"]["cat_mode"] else "n"
+    cat_mode_input = (
+        input(f"고양이 이모지 UI 사용 (y/n) [{cat_mode_str}]: ") or cat_mode_str
+    )
     cat_mode = cat_mode_input.lower() == "y"
 
     config["api"]["key"] = api_key
@@ -107,7 +136,7 @@ def setup_config(ui):
     config["ui"]["cat_mode"] = cat_mode
 
     if config_save(config, ui):
-        ui.print_cat("\n설정이 저장되었습니다")
+        print()
         return True
 
     else:
