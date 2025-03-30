@@ -38,3 +38,6 @@ COMMIT_STYLES = ["conventional", "simple"]
 
 # 고양이 이모티콘
 CAT_EMOJIS = ["😺", "😸", "😻", "😽", "🐱", "🐈", "😹"]
+
+# 서버 설정
+SERVER_CONFIG = ["local", "lambda"]
