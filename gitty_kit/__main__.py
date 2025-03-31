@@ -1,4 +1,5 @@
 import argparse
+import sys
 
 from ai_client import generate_commit_message
 from setup_manager import config_load, ensure_user_config_exists, setup_config
@@ -30,27 +31,33 @@ def main():
     if not config_exists:
         setup_success = setup_config(temp_ui, is_initial_setup=True)
 
-        if setup_success:
-            temp_ui.print_cat("설정이 완료되었습니다. 다시 실행하여 커밋을 진행하세요.")
-            return
+        if not setup_success:
+            temp_ui.print_cat("설정이 완료되지 않았습니다. 프로그램을 종료합니다.")
+            sys.exit(1)
+
+        temp_ui.print_cat("설정이 완료되었습니다. 다시 실행하여 커밋을 진행하세요.")
+        return
 
     if args.config:
         setup_success = setup_config(temp_ui)
 
-        if setup_success:
-            temp_ui.print_cat("설정이 완료되었습니다. 다시 실행하여 커밋을 진행하세요.")
-            return
+        if not setup_success:
+            temp_ui.print_cat("설정이 완료되지 않았습니다. 프로그램을 종료합니다.")
+            sys.exit(1)
+
+        temp_ui.print_cat("설정이 완료되었습니다. 다시 실행하여 커밋을 진행하세요.")
+        return
 
     # 3-2. 설정 로드
-    config = config_load(temp_ui)
+    app_config = config_load(temp_ui)
 
     # 4. 설정에서 cat_mode 가져와서 실제 사용할 UI 매니저 생성
-    cat_mode = config.get("ui", {}).get("cat_mode", True)
+    cat_mode = app_config.ui.cat_mode
     ui = UIManager(cat_mode=cat_mode)
 
     # 5. 커밋 처리
     ui.print_cat("Gitty-Kit이 시작되었습니다.")
-    commit_message = generate_commit_message(config)
+    commit_message = generate_commit_message(app_config)
 
     if commit_message is None:
         ui.print_cat("변경사항이 없습니다.")
