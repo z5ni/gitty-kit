@@ -3,14 +3,13 @@ import os
 import requests
 import configparser
 from pathlib import Path
+from lambda_function import lambda_handler
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 config_path = os.path.join(BASE_DIR, "config.ini")
 config = configparser.ConfigParser()
 config.read(config_path)
 LAMBDA_URL = config.get("API", "LAMBDA_URL")
-
-from lambda_function import lambda_handler
 
 
 def test_lambda_function():

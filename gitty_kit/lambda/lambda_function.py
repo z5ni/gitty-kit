@@ -77,7 +77,7 @@ def lambda_handler(event, context):
         if not isinstance(max_length, int):
             try:
                 max_length = int(max_length)
-            except:
+            except (ValueError, TypeError):
                 max_length = 75
 
         if max_length < 10 or max_length > 500:
