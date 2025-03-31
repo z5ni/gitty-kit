@@ -1,8 +1,9 @@
-from openai import OpenAI
 import configparser
 import json
 import os
 from pathlib import Path
+
+from openai import OpenAI
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 config_path = os.path.join(BASE_DIR, "config.ini")

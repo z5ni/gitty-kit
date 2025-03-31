@@ -10,7 +10,7 @@ from config import (
     SERVER_CONFIG,
     SUPPORT_LANGUAGES,
 )
-from config_models import ApiConfig, AppConfig, UiConfig, FormatConfig, ServerConfig
+from config_models import ApiConfig, AppConfig, FormatConfig, ServerConfig, UiConfig
 
 
 def ensure_user_config_exists(ui):

@@ -1,8 +1,9 @@
+import configparser
 import json
 import os
-import requests
-import configparser
 from pathlib import Path
+
+import requests
 from lambda_function import lambda_handler
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
