@@ -4,7 +4,7 @@ from utils.git import git_diff
 
 
 def ai_client_init(config):
-    client = OpenAI(api_key=config["api"]["key"])
+    client = OpenAI(api_key=config.api.key)
     return client
 
 
@@ -20,10 +20,10 @@ def generate_commit_message(config):
 
     client = ai_client_init(config)
 
-    model = config["api"]["model"]
-    language = config["language"]
-    style = config["format"]["style"]
-    max_length = config["format"]["max_length"]
+    model = config.api.model
+    language = config.format.language
+    style = config.format.style
+    max_length = config.format.max_length
 
     try:
         # instructions: 모델의 행동을 결정하는 프롬프트

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import Literal, Optional
-from .config import SUPPORT_LANGUAGES, COMMIT_STYLES, OPENAI_MODEL, SERVER_CONFIG
+from config import SUPPORT_LANGUAGES, COMMIT_STYLES, OPENAI_MODEL, SERVER_CONFIG
 
 
 @dataclass
